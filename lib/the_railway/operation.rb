@@ -20,10 +20,10 @@ module TheRailway
     class << self
       attr_accessor :tracks
       
-      def add_track(track_name:, &block)
+      def add_track(track_name:, options: {}, &block)
         @tracks ||= []
         
-        @tracks << StepBuilder.new(track: track_name, ctx: self, &block)
+        @tracks << StepBuilder.new(track: track_name, ctx: self, options: options, &block)
       end
       
       def call(mutable_data = {}, immutable_data = {}, **options)
@@ -34,8 +34,6 @@ module TheRailway
             options:        options
         )
       end
-      
-      private
     end
   end
 end
