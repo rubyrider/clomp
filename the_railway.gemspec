@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Simple operation builder.}
   spec.description   = %q{The Railway gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/rubyrider/the_railway"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -23,5 +23,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency 'minitest'
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "byebug"
 end
