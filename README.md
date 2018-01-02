@@ -25,9 +25,18 @@ Build any service with the track! Add as many tracks as you want.
 Consider the following class:
 ```ruby
 class SingingOperation < TheRailway::Operation
-    add_track :get_lyrics
+    # this block only executes on successful steps! 
+    # pass options to receive the operation states!   
+    add_track :get_lyrics do |options|
+      # we call this a success state based block!
+      options[:do_some_thing] = 10
+    end
+    
     add_track :get_instruments_ready
+    
     add_track :start_signing
+    
+    finally :receive_price #final step, wont execute after this step!
     
     def get_instruments_ready(options, mutable_data: , **)
       # do anything!
@@ -40,13 +49,18 @@ class SingingOperation < TheRailway::Operation
     def start_signing(options)
       puts options[:mutable_options]
     end
+    
+    def receive_price(options)
+      puts "I am honored for this awesome price!"
+    end
 end
-
-# Call this operation:
-SingingOperation.({singer_name: 'Base Baba'})
 ```
 
-\#TODO Add more details!
+```ruby
+@result = SingingOperation.({singer_name: 'Base Baba'})
+@result.success? # => true
+@result.failure? # => false
+```
 
 ## Development
 
