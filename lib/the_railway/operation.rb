@@ -13,35 +13,48 @@ module TheRailway
       exec_steps!
     end
     
+    # Execute all the steps! Execute all the tracks!
     def exec_steps!
       @track_builders.each do |track|
-        raise TheRailway::Errors::TrackNotDefined, "Please define track: #{track.name}" unless self.respond_to?(track.name)
+        raise Errors::TrackNotDefined, "Please define track: #{track.name}" unless self.respond_to?(track.name)
         
-        track.exec!(self, @options)
+        _track = track.exec!(self, @options)
+        
+        break if _track.failure?
       end
       
-      self
+      @result = Result.new(@options, @track_builders, self)
     end
     
+    def executed_steps
+      @track_builders.collect { |track| track.name if track.success? }.compact
+    end
+    
+    # Name of the steps defined in the operation class
     def steps
       @track_builders.collect { |track| track.name }
     end
     
     class << self
+      
+      # To store and read all the tracks!
       attr_accessor :track_builders
       
+      # get track name and options!
       def track(track_name, track_options: {}, &block)
         @track_builders ||= []
         
         @track_builders << build_track(track_name, track_options, :track, &block)
       end
-      
+
+      # get the track name for the failure case!
       def failure(track_name, track_options: {}, &block)
         @track_builders ||= []
         
         @track_builders << build_track(track_name, track_options, :failed_track, &block)
       end
-      
+
+      # get the track name for the final step! Only one step will be executed!
       def finally(track_name, track_options: {}, &block)
         @track_builders ||= []
   
