@@ -30,10 +30,22 @@ module TheRailway
     class << self
       attr_accessor :track_builders
       
-      def add_track(track_name, track_options: {}, &block)
+      def track(track_name, track_options: {}, &block)
         @track_builders ||= []
         
-        @track_builders << Track.new(name: track_name, track_options: track_options, &block)
+        @track_builders << build_track(track_name, track_options, :track, &block)
+      end
+      
+      def failure(track_name, track_options: {}, &block)
+        @track_builders ||= []
+        
+        @track_builders << build_track(track_name, track_options, :failed_track, &block)
+      end
+      
+      def finally(track_name, track_options: {}, &block)
+        @track_builders ||= []
+  
+        @track_builders << build_track(track_name, track_options, :finally, &block)
       end
       
       def call(mutable_data = {}, immutable_data = {})
@@ -42,6 +54,12 @@ module TheRailway
             mutable_data:   mutable_data,
             immutable_data: immutable_data
         )
+      end
+      
+      private
+      
+      def build_track(track_name, track_options = {}, track_type , &block)
+        Track.new(name: track_name, track_options: track_options, track_type: track_type, &block)
       end
     end
   end

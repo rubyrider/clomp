@@ -1,17 +1,4 @@
 RSpec.describe TheRailway::Operation do
-  class TestOperation < TheRailway::Operation
-    add_track :first_track
-    add_track :call_something
-    
-    def first_track(options, mutable_data: , **)
-      mutable_data[:c] = 'Updated'
-    end
-    
-    def call_something(options)
-      puts options[:mutable_options]
-    end
-  end
-  
   before do
     @operation = TestOperation.({a: 1}, {b: 2})
   end
@@ -24,5 +11,29 @@ RSpec.describe TheRailway::Operation do
   it 'should mutate options' do
     expect(@operation.options[:mutable_data][:c]).to be == 'Updated'
   end
+  
+  it 'block should be executed' do
+    expect(@operation.options[:d]).to be == "New"
+  end
 end
 
+class TestOperation < TheRailway::Operation
+  track :first_track
+  
+  track :call_something do |options|
+    puts options[:d] = "New"
+  end
+  
+  failure :notify_admin
+  finally :tell_user_about_this
+  
+  def first_track(options, mutable_data: , **)
+    mutable_data[:c] = 'Updated'
+  end
+  
+  def call_something(options) end
+  
+  def notify_admin(options) end
+  
+  def tell_user_about_this(options) end
+end
