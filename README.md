@@ -1,6 +1,6 @@
-# TheRailway
-**The Railway gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
+# TheRailway [![CircleCI](https://circleci.com/gh/rubyrider/the_railway.svg?style=svg)](https://circleci.com/gh/rubyrider/the_railway)
 
+**The Railway gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
 
 ## Installation
 
