@@ -1,4 +1,4 @@
-# Tread [![CircleCI](https://circleci.com/gh/rubyrider/the_railway.svg?style=svg)](https://circleci.com/gh/rubyrider/the_railway)
+# Tread [![CircleCI](https://circleci.com/gh/rubyrider/tread.svg?style=svg)](https://circleci.com/gh/rubyrider/tread)
 
 **The Railway gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
 Tread will give you an easy interface to complete your service operation. You can use it with any framework 
