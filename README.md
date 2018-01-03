@@ -1,6 +1,6 @@
 # Tread [![CircleCI](https://circleci.com/gh/rubyrider/tread.svg?style=svg)](https://circleci.com/gh/rubyrider/tread)
 
-**The Railway gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
+**Tread gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
 Tread will give you an easy interface to complete your service operation. You can use it with any framework 
 or plain ruby object. 
 ## Installation
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install the_railway
+    $ gem install tread
 
 ## Usage
 Build any service with the track! Add as many tracks as you want.
