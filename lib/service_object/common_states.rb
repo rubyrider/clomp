@@ -1,4 +1,4 @@
-module Tread
+module ServiceObject
   module CommonStates
     FAILURE = 'failure'
     SUCCESS = 'success'

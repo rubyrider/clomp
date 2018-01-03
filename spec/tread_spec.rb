@@ -1,5 +1,5 @@
-RSpec.describe Tread do
+RSpec.describe ServiceObject do
   it 'has a version number' do
-    expect(Tread::VERSION).not_to be '0.1.0'
+    expect(ServiceObject::VERSION).not_to be '0.1.0'
   end
 end

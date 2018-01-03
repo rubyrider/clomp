@@ -1,14 +1,14 @@
-# Tread [![CircleCI](https://circleci.com/gh/rubyrider/tread.svg?style=svg)](https://circleci.com/gh/rubyrider/tread)
+# ServiceObject [![CircleCI](https://circleci.com/gh/rubyrider/ServiceObject.svg?style=svg)](https://circleci.com/gh/rubyrider/ServiceObject)
 
-**Tread gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
-Tread will give you an easy interface to complete your service operation. You can use it with any framework 
+**ServiceObject gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
+ServiceObject will give you an easy interface to complete your service operation. You can use it with any framework 
 or plain ruby object. 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'tread'
+gem 'ServiceObject'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install tread
+    $ gem install ServiceObject
 
 ## Usage
 Build any service with the track! Add as many tracks as you want.
@@ -27,7 +27,7 @@ specific step.
 
 Consider the following class:
 ```ruby
-class SingingOperation < Tread::Operation
+class SingingOperation < ServiceObject::Operation
     # this block only executes on successful steps! 
     # pass options to receive the operation states!   
     add_track :get_lyrics do |options|
@@ -73,7 +73,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/rubyrider/tread. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rubyrider/ServiceObject. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

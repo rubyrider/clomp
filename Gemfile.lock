@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tread (0.1.0)
+    ServiceObject (0.1.1)
 
 GEM
   remote: https://rubygems.org/
@@ -27,11 +27,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ServiceObject!
   bundler (~> 1.16)
   byebug
   rake (~> 10.0)
   rspec
-  tread!
 
 BUNDLED WITH
    1.16.0

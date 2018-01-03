@@ -1,6 +1,6 @@
-module Tread
+module ServiceObject
   class Track
-    include Tread::CommonStates
+    include ServiceObject::CommonStates
     
     attr_reader :name, :block, :track_options, :state, :error
     

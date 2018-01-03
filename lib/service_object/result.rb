@@ -1,4 +1,4 @@
-module Tread
+module ServiceObject
   class Result
     include CommonStates
     extend Forwardable

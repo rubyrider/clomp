@@ -1,6 +1,6 @@
-RSpec.describe Tread::Operation do
+RSpec.describe ServiceObject::Operation do
   describe 'Successful operation' do
-    class SuccessfulOperation < Tread::Operation
+    class SuccessfulOperation < ServiceObject::Operation
       track :first_track
     
       track :call_something do |options|
@@ -49,7 +49,7 @@ RSpec.describe Tread::Operation do
   end
 
   describe 'Failure operation' do
-    class FailureOperation < Tread::Operation
+    class FailureOperation < ServiceObject::Operation
       track :first_track
     
       track :call_something do |options|

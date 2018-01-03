@@ -1,4 +1,4 @@
-module Tread
+module ServiceObject
   class Operation
     attr_accessor :input, :options
     
