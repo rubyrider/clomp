@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "the_railway"
+require "tread"
 require 'byebug'
 
 RSpec.configure do |config|

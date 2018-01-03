@@ -1,4 +1,4 @@
-module TheRailway
+module Tread
   module CommonStates
     FAILURE = 'failure'
     SUCCESS = 'success'

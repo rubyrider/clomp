@@ -1,6 +1,6 @@
-RSpec.describe TheRailway::Operation do
+RSpec.describe Tread::Operation do
   describe 'Successful operation' do
-    class SuccessfulOperation < TheRailway::Operation
+    class SuccessfulOperation < Tread::Operation
       track :first_track
     
       track :call_something do |options|
@@ -14,11 +14,14 @@ RSpec.describe TheRailway::Operation do
         mutable_data[:c] = 'Updated'
       end
     
-      def call_something(options) end
+      def call_something(options)
+      end
     
-      def notify_admin(options) end
+      def notify_admin(options)
+      end
     
-      def tell_user_about_this(options) end
+      def tell_user_about_this(options)
+      end
     end
   
     before do
@@ -46,7 +49,7 @@ RSpec.describe TheRailway::Operation do
   end
 
   describe 'Failure operation' do
-    class FailureOperation < TheRailway::Operation
+    class FailureOperation < Tread::Operation
       track :first_track
     
       track :call_something do |options|

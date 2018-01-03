@@ -1,13 +1,14 @@
-# TheRailway [![CircleCI](https://circleci.com/gh/rubyrider/the_railway.svg?style=svg)](https://circleci.com/gh/rubyrider/the_railway)
+# Tread [![CircleCI](https://circleci.com/gh/rubyrider/the_railway.svg?style=svg)](https://circleci.com/gh/rubyrider/the_railway)
 
 **The Railway gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
-
+Tread will give you an easy interface to complete your service operation. You can use it with any framework 
+or plain ruby object. 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'the_railway'
+gem 'tread'
 ```
 
 And then execute:
@@ -20,11 +21,13 @@ Or install it yourself as:
 
 ## Usage
 Build any service with the track! Add as many tracks as you want.
+tracks will be loaded sequentially. You can control success and failure state of any 
+specific step.
 
 
 Consider the following class:
 ```ruby
-class SingingOperation < TheRailway::Operation
+class SingingOperation < Tread::Operation
     # this block only executes on successful steps! 
     # pass options to receive the operation states!   
     add_track :get_lyrics do |options|
@@ -70,7 +73,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/rubyrider/the_railway. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rubyrider/tread. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

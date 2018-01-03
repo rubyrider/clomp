@@ -1,4 +1,4 @@
-module TheRailway
+module Tread
   class Result
     include CommonStates
     extend Forwardable

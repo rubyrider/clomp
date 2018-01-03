@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    the_railway (0.1.0)
+    tread (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -31,7 +31,7 @@ DEPENDENCIES
   byebug
   rake (~> 10.0)
   rspec
-  the_railway!
+  tread!
 
 BUNDLED WITH
    1.16.0

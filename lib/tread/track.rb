@@ -1,10 +1,10 @@
-module TheRailway
+module Tread
   class Track
-    include TheRailway::CommonStates
+    include Tread::CommonStates
     
     attr_reader :name, :block, :track_options, :state, :error
     
-    VALID_TRACK_TYPES = %I(track failed_track finally)
+    VALID_TRACK_TYPES = %I(track failed_track finally catch)
     
     def initialize(name: (raise Errors::NoTrackProvided), track_options: {}, track_type: VALID_TRACK_TYPES.first, &block)
       raise UnknownTrackType, 'Please provide a valid track type' unless VALID_TRACK_TYPES.include?(track_type)
