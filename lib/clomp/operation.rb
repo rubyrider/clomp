@@ -16,7 +16,8 @@ module Clomp
     # Execute all the steps! Execute all the tracks!
     def exec_steps!
       @track_builders.each do |track|
-        raise Errors::TrackNotDefined, "Please define track: #{track.name}" unless self.respond_to?(track.name)
+        next unless track.track?
+        raise Errors::TrackNotDefined, "Please define the track in your operation/service: #{track.name}" unless self.respond_to?(track.name)
         
         _track = track.exec!(self, @options)
         

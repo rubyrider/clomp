@@ -17,6 +17,20 @@ module Clomp
       @error         = nil
     end
     
+    def type
+      @type
+    end
+
+    VALID_TRACK_TYPES.each do |track_type|
+      define_method "#{track_type}?" do
+        @type == track_type
+      end
+    end
+    
+    def track?
+      @type == :track
+    end
+    
     # Track#exec! executes the steps defined in the operation class
     def exec!(object, options)
       mark_as_failure! # going to execute! set to failure initially
