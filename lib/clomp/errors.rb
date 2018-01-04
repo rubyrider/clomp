@@ -1,4 +1,4 @@
-module ServiceObject
+module Clomp
   module Errors
     NoTrackProvided  = Class.new(ArgumentError)
     TrackNotDefined  = Class.new(NotImplementedError)

@@ -1,4 +1,4 @@
-module ServiceObject
+module Clomp
   class Result
     include CommonStates
     extend Forwardable

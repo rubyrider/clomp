@@ -1,17 +1,17 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "service_object/version"
+require "clomp/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "ServiceObject"
-  spec.version       = ServiceObject::VERSION
-  spec.authors       = ["Irfan Ahmed"]
+  spec.name          = "clomp"
+  spec.version       = Clomp::VERSION
+  spec.authors       = ['Irfan Ahmed']
   spec.email         = ['irfandhk@gmail.com', 'odesk.irfan@gmail.com']
 
-  spec.summary       = %q{Simple service builder for ruby using railway oriented programing paradigm.}
-  spec.description   = %q{ServiceObject gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway Oriented Programing paradigm.}
-  spec.homepage      = "https://github.com/rubyrider/service_object"
+  spec.summary       = %q{Clomp is a simple service builder for ruby using railway oriented programing paradigm.}
+  spec.description   = %q{Clomp gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway Oriented Programing paradigm.}
+  spec.homepage      = "https://github.com/rubyrider/clomp"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

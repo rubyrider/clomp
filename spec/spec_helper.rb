@@ -1,5 +1,5 @@
 require "bundler/setup"
-require 'service_object'
+require 'clomp'
 require 'byebug'
 
 RSpec.configure do |config|

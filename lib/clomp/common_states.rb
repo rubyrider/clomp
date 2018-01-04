@@ -1,4 +1,4 @@
-module ServiceObject
+module Clomp
   module CommonStates
     FAILURE = 'failure'
     SUCCESS = 'success'

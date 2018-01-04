@@ -1,4 +1,4 @@
-module ServiceObject
+module Clomp
   class Context
   
   end

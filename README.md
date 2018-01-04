@@ -1,14 +1,14 @@
-# ServiceObject [![CircleCI](https://circleci.com/gh/rubyrider/ServiceObject.svg?style=svg)](https://circleci.com/gh/rubyrider/ServiceObject)
+# Clomp [![CircleCI](https://circleci.com/gh/rubyrider/Clomp.svg?style=svg)](https://circleci.com/gh/rubyrider/Clomp)
 
-**ServiceObject gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
-ServiceObject will give you an easy interface to complete your service operation. You can use it with any framework 
+**Clomp gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
+Clomp will give you an easy interface to complete your service operation. You can use it with any framework 
 or plain ruby object. 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ServiceObject'
+gem 'Clomp'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ServiceObject
+    $ gem install Clomp
 
 ## Usage
 Build any service with the track! Add as many tracks as you want.
@@ -27,7 +27,7 @@ specific step.
 
 Consider the following class:
 ```ruby
-class SingingOperation < ServiceObject::Operation
+class SingingOperation < Clomp::Operation
     # this block only executes on successful steps! 
     # pass options to receive the operation states!   
     add_track :get_lyrics do |options|
@@ -73,7 +73,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/rubyrider/ServiceObject. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/rubyrider/clomp. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -81,4 +81,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the TheRailway project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/the_railway/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the TheRailway project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/rubyrider/clomp/blob/master/CODE_OF_CONDUCT.md).

@@ -1,6 +1,6 @@
-module ServiceObject
+module Clomp
   class Track
-    include ServiceObject::CommonStates
+    include Clomp::CommonStates
     
     attr_reader :name, :block, :track_options, :state, :error
     

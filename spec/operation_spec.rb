@@ -1,6 +1,6 @@
-RSpec.describe ServiceObject::Operation do
+RSpec.describe Clomp::Operation do
   describe 'Successful operation' do
-    class SuccessfulOperation < ServiceObject::Operation
+    class SuccessfulOperation < Clomp::Operation
       track :first_track
     
       track :call_something do |options|
@@ -49,7 +49,7 @@ RSpec.describe ServiceObject::Operation do
   end
 
   describe 'Failure operation' do
-    class FailureOperation < ServiceObject::Operation
+    class FailureOperation < Clomp::Operation
       track :first_track
     
       track :call_something do |options|
