@@ -60,7 +60,7 @@ end
 ```
 
 ```ruby
-@result = SingingOperation.({singer_name: 'Base Baba'})
+@result = SingingOperation[singer_name: 'Base Baba']
 @result.success? # => true
 @result.failure? # => false
 ```

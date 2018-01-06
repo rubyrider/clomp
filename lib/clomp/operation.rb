@@ -1,21 +1,22 @@
 module Clomp
   class Operation
-    attr_accessor :input, :options
+    attr_reader :result
     
-    def call(track_builders: [], mutable_data: {}, immutable_data: {})
-      @track_builders           = track_builders
-      @mutable_data             = mutable_data
-      @immutable_data           = immutable_data
-      @options                  ||= {}
-      @options[:mutable_data]   = mutable_data
-      @options[:immutable_data] = immutable_data
+    def initialize(track_builders: [], options: {})
+      @options = options
+      # Setup result object!
+      @result = Result.new(
+          operation: self,
+          tracks:    track_builders || [],
+          options:   options || {}
+      )
       
-      exec_steps!
+      exec_steps!(@result)
     end
     
     # Execute all the steps! Execute all the tracks!
-    def exec_steps!
-      @track_builders.each do |track|
+    def exec_steps!(result)
+      result['tracks'].each do |track|
         next unless track.track?
         raise Errors::TrackNotDefined, "Please define the track in your operation/service: #{track.name}" unless self.respond_to?(track.name)
         
@@ -23,17 +24,15 @@ module Clomp
         
         break if _track.failure?
       end
-      
-      @result = Result.new(@options, @track_builders, self)
     end
     
     def executed_steps
-      @track_builders.collect { |track| track.name if track.success? }.compact
+      @result['tracks'].collect {|track| track.name if track.success?}.compact
     end
     
     # Name of the steps defined in the operation class
     def steps
-      @track_builders.collect { |track| track.name }
+      @result['tracks'].collect {|track| track.name}
     end
     
     class << self
@@ -47,32 +46,38 @@ module Clomp
         
         @track_builders << build_track(track_name, track_options, :track, &block)
       end
-
+      
       # get the track name for the failure case!
       def failure(track_name, track_options: {}, &block)
         @track_builders ||= []
         
         @track_builders << build_track(track_name, track_options, :failed_track, &block)
       end
-
+      
       # get the track name for the final step! Only one step will be executed!
       def finally(track_name, track_options: {}, &block)
         @track_builders ||= []
-  
+        
         @track_builders << build_track(track_name, track_options, :finally, &block)
       end
       
+      def [](mutable_data = {}, immutable_data = {})
+        self.(mutable_data, immutable_data)
+      end
+      
       def call(mutable_data = {}, immutable_data = {})
-        self.new.call(
+        new(
             track_builders: @track_builders,
-            mutable_data:   mutable_data,
-            immutable_data: immutable_data
-        )
+            options: {
+                mutable_data:   mutable_data,
+                immutable_data: immutable_data
+            },
+        ).result
       end
       
       private
       
-      def build_track(track_name, track_options = {}, track_type , &block)
+      def build_track(track_name, track_options = {}, track_type, &block)
         Track.new(name: track_name, track_options: track_options, track_type: track_type, &block)
       end
     end

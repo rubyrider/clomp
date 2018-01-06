@@ -1,18 +1,58 @@
 module Clomp
   class Result
-    include CommonStates
-    extend Forwardable
+    attr_reader :options, :operation, :state
     
-    attr_reader :options, :state, :operation
+    def initialize(options: {}, tracks: [], operation: nil)
+      @report = {}
+      
+      @operation      = set_prop :operation, operation || Operation.new
+      @tracks         = set_prop :tracks, tracks || []
+      @options        ||= {}
+      @immutable_data = set_prop :options, options
+      @state          = ->(tracks) { tracks.select {|track| track.failure?}.count.zero? }
+    end
     
-    def_delegators :@operation, :steps, :executed_steps
+    def success?
+      @state.(self[:tracks]) === true
+    end
     
-    def initialize(options, tracks = [], operation)
-      @options   = options
-      @tracks    = tracks
-      @error     = nil
-      @state     = @tracks.select {|track| track.failure?}.count.zero? ? SUCCESS : FAILURE
-      @operation = operation
+    def failure?
+      @state.(self[:tracks]) === false
+    end
+    
+    def method_missing(method, *args)
+      if @operation.respond_to?(method)
+        @operation.send(method, *args)
+      else
+        super
+      end
+    end
+    
+    def [](key)
+      sym_key = to_sym_key(key)
+      
+      self.instance_variable_get(sym_key)
+    end
+    
+    def []=(key, value)
+      sym_key = to_sym_key(key)
+      self.instance_variable_set(sym_key, value)
+    end
+    
+    def set_prop(key, value)
+      sym_key = to_sym_key(key)
+      
+      self.instance_variable_set(sym_key, value)
+    end
+    
+    private
+    
+    def to_sym_key(key)
+      if key.is_a? Symbol
+        ('@' + key.to_s).to_sym
+      else
+        ('@' + key.to_s.delete('@')).to_sym
+      end
     end
   end
 end
