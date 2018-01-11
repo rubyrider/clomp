@@ -28,10 +28,10 @@ specific step.
 Consider the following class:
 ```ruby
 class SingingOperation < Clomp::Operation
-    # this block only executes on successful steps! 
+    # this block only executes on failure step! 
     # pass options to receive the operation states!   
     add_track :get_lyrics do |options|
-      # we call this a success state based block!
+      # we call this a failure state based block!
       options[:do_some_thing] = 10
     end
     

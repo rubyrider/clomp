@@ -41,7 +41,7 @@ module Clomp
         mark_as_success! if object.public_send(name.to_sym, options) != false
       end
       
-      @block.(options) if success? && @block
+      @block.(options) if failure? && @block
       
       self
     

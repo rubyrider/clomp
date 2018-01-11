@@ -47,7 +47,7 @@ RSpec.describe Clomp::Operation do
     end
     
     it 'should execute block on success' do
-      expect(@result.options[:d]).to be == 'New'
+      expect(@result.options[:d]).to be_nil
     end
   end
   
@@ -99,9 +99,9 @@ RSpec.describe Clomp::Operation do
     it 'should mutate options' do
       expect(@result.options[:mutable_data][:c]).to be == 'Updated'
     end
-    
-    it 'should execute block on success' do
-      expect(@result.options[:d]).to be_nil
+
+    it 'should execute block on failure' do
+      expect(@result.options[:d]).to be == 'New'
     end
   end
 end

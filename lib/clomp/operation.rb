@@ -2,6 +2,11 @@ module Clomp
   class Operation
     attr_reader :result
     
+    # Constructor for operation object
+    #
+    # @param track_builders [Array] the list of tracks we define
+    # @param options [Hash] of options to be provided by .[] call/method
+    # @return [self]
     def initialize(track_builders: [], options: {})
       @options = options
       # Setup result object!
@@ -24,6 +29,8 @@ module Clomp
         
         break if _track.failure?
       end
+      
+      self
     end
     
     def executed_steps
