@@ -1,6 +1,12 @@
 RSpec.describe Clomp::Operation do
   describe 'Successful operation' do
     class SuccessfulOperation < Clomp::Operation
+      setup do |config|
+        config.pass_fast = true
+        config.fail_fast = true
+        config.optional = true
+      end
+      
       track :first_track
       
       track :call_something do |options|
@@ -15,15 +21,15 @@ RSpec.describe Clomp::Operation do
       end
       
       def call_something(options)
-      
+        # call something
       end
       
       def notify_admin(options)
-      
+        # notify someone
       end
       
       def tell_user_about_this(options)
-      
+        # do something else
       end
     end
     
@@ -33,6 +39,23 @@ RSpec.describe Clomp::Operation do
     
     it 'Operation#success? should return false if all the steps are successful' do
       expect(@result.success?).to be_truthy
+    end
+    
+    it 'should have configuration' do
+      expect(@result.configs).to be_an_instance_of(Clomp::Configuration)
+    end
+    
+    it 'should configured to fail fast' do
+      expect(@result.configs.fail_fast).to be_truthy
+    end
+    
+    it 'should configured to pass fast' do
+      expect(@result.configs.pass_fast).to be_truthy
+    end
+    
+    it 'should configured to execute track optionally' do
+      # Failure step wont count as failure, just ignoring the output
+      expect(@result.configs.optional).to be_truthy
     end
     
     it 'should add tracks' do
@@ -80,7 +103,23 @@ RSpec.describe Clomp::Operation do
     before do
       @result = FailureOperation[{ a: 1 }, { b: 2 }]
     end
-    
+
+    it 'should have configuration' do
+      expect(@result.configs).to be_an_instance_of(Clomp::Configuration)
+    end
+
+    it 'should be configured not to fail fast by default' do
+      expect(@result.configs.fail_fast).to be_falsey
+    end
+
+    it 'should be configured not to pass fast by default' do
+      expect(@result.configs.pass_fast).to be_falsey
+    end
+
+    it 'should be configured not to execute track optionally' do
+      expect(@result.configs.optional).to be_falsey
+    end
+
     it 'Operation#failure? should return true if any step is failure' do
       expect(@result.success?).to be_falsey
       expect(@result.failure?).to be_truthy

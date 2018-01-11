@@ -6,6 +6,7 @@ require 'clomp/track'
 require 'clomp/context'
 require 'clomp/errors'
 require 'clomp/result'
+require 'clomp/configuration'
 
 module Clomp
 

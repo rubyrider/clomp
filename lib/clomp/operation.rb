@@ -1,6 +1,6 @@
 module Clomp
   class Operation
-    attr_reader :result
+    attr_reader :result, :configs
     
     # Constructor for operation object
     #
@@ -15,6 +15,8 @@ module Clomp
           tracks:    track_builders || [],
           options:   options || {}
       )
+      
+      @configs = self.class.setup_configuration
       
       exec_steps!(@result)
     end
@@ -45,7 +47,25 @@ module Clomp
     class << self
       
       # To store and read all the tracks!
-      attr_accessor :track_builders
+      attr_accessor :track_builders, :configs
+      
+      # Operation wise configuration to control state
+      # All operation may not require fail fast
+      # All operation may not require pass fast
+      # Operation wise optional value could be different
+      #
+      # @yield [config] to mutate new configuration
+      #
+      # @return [Configuration] @config
+      def setup
+        @configs ||= Configuration.new
+        
+        yield(@configs) if block_given?
+        
+        @configs
+      end
+      
+      alias_method :setup_configuration, :setup
       
       # get track name and options!
       def track(track_name, track_options: {}, &block)
@@ -75,16 +95,18 @@ module Clomp
       def call(mutable_data = {}, immutable_data = {})
         new(
             track_builders: @track_builders,
-            options: {
+            options:        {
                 mutable_data:   mutable_data,
                 immutable_data: immutable_data
             },
-        ).result
+            ).result
       end
       
       private
       
       def build_track(track_name, track_options = {}, track_type, &block)
+        @configs ||= Configuration.new
+  
         Track.new(name: track_name, track_options: track_options, track_type: track_type, &block)
       end
     end
