@@ -28,6 +28,14 @@ specific step.
 Consider the following class:
 ```ruby
 class SingingOperation < Clomp::Operation
+    # Configure your operation for common tracks,
+    # configuration can be overridden from individual tracks 
+    setup do |config|
+      config.pass_fast = true
+      config.fail_fast = true
+      config.optional = true
+     end
+      
     # this block only executes on failure step! 
     # pass options to receive the operation states!   
     add_track :get_lyrics do |options|
