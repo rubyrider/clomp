@@ -27,6 +27,14 @@ specific step.
 
 Consider the following class:
 ```ruby
+class AnotherOperation < Clomp::Operation
+  track :track_from_another_operation
+
+  def track_from_another_operation(options)
+    options[:hello_from_another_operation] = true
+  end
+end
+    
 class SingingOperation < Clomp::Operation
     # Configure your operation for common tracks,
     # configuration can be overridden from individual tracks 
@@ -46,6 +54,10 @@ class SingingOperation < Clomp::Operation
     add_track :get_instruments_ready
     
     add_track :start_signing
+    
+    # We can now share specific step from 
+    # outsider operation
+    share :track_from_another_operation, from: AnotherOperation # Or 'AnotherOperation'
     
     finally :receive_price #final step, wont execute after this step!
     
