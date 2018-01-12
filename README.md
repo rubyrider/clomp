@@ -1,4 +1,4 @@
-# Clomp [![Gem Version](https://badge.fury.io/rb/clomp.svg)](https://badge.fury.io/rb/clomp) [![CircleCI](https://circleci.com/gh/rubyrider/clomp.svg?style=svg)](https://circleci.com/gh/rubyrider/clomp)
+# Clomp [![CircleCI](https://circleci.com/gh/rubyrider/clomp.svg?style=svg)](https://circleci.com/gh/rubyrider/clomp) [![Gem Version](https://badge.fury.io/rb/clomp.svg)](https://badge.fury.io/rb/clomp) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT) [![Maintainability](https://api.codeclimate.com/v1/badges/a7edc252626bdf40d389/maintainability)](https://codeclimate.com/github/rubyrider/clomp/maintainability)
 
 **Clomp gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
 Clomp will give you an easy interface to complete your service operation. You can use it with any framework 
