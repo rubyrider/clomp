@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/clomp.svg)](https://badge.fury.io/rb/clomp)
 # Clomp [![CircleCI](https://circleci.com/gh/rubyrider/clomp.svg?style=svg)](https://circleci.com/gh/rubyrider/clomp)
 
 **Clomp gem provides a smooth, lightweight, productive and reusable way to build an operation using Railway oriented programing paradigm.**
