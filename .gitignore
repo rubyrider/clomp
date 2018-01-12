@@ -11,3 +11,4 @@
 # rspec failure tracking
 .rspec_status
 .clomp-0.0.3.gem
+/*.gem

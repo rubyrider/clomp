@@ -1,5 +1,13 @@
 RSpec.describe Clomp::Operation do
   describe 'Successful operation' do
+    class AnotherOperation < Clomp::Operation
+      track :track_from_another_operation
+    
+      def track_from_another_operation(options)
+        options[:hello_from_another_operation] = true
+      end
+    end
+    
     class SuccessfulOperation < Clomp::Operation
       setup do |config|
         config.pass_fast = true
@@ -8,6 +16,8 @@ RSpec.describe Clomp::Operation do
       end
       
       track :first_track
+      
+      share :track_from_another_operation, from: 'AnotherOperation'
       
       track :call_something do |options|
         options[:d] = 'New'
@@ -71,6 +81,10 @@ RSpec.describe Clomp::Operation do
     
     it 'should execute block on success' do
       expect(@result.options[:d]).to be_nil
+    end
+    
+    it 'should get effective from another operation' do
+      expect(@result.options[:hello_from_another_operation]).to be == true
     end
   end
   
