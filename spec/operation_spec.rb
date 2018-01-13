@@ -150,6 +150,7 @@ RSpec.describe Clomp::Operation do
     end
     
     it 'should mutate options' do
+      expect(@result.data[:c]).to be == 'Updated'
       expect(@result.options[:mutable_data][:c]).to be == 'Updated'
     end
 
