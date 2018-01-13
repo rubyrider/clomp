@@ -3,13 +3,20 @@ module Clomp
     attr_reader :options, :operation, :state
     
     def initialize(options: {}, tracks: [], operation: nil)
-      @report = {}
-      
+      @report         = {}
       @operation      = set_prop :operation, operation || Operation.new
       @tracks         = set_prop :tracks, tracks || []
       @options        ||= {}
       @immutable_data = set_prop :options, options
-      @state          = ->(tracks) { tracks.select {|track| track.failure?}.count.zero? }
+      @state          = ->(tracks) {tracks.select {|track| track.failure?}.count.zero?}
+    end
+    
+    def data
+      options[:mutable_data]
+    end
+    
+    def immutable_data
+      options[:immutable_data]
     end
     
     def success?
