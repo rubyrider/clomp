@@ -49,7 +49,7 @@ module Clomp
       #
       # @return [Configuration] @config
       def setup
-        @configs ||= Configuration.new
+        @configs ||= Configuration.config
         
         yield(@configs) if block_given?
         
@@ -57,6 +57,7 @@ module Clomp
       end
       
       alias_method :setup_configuration, :setup
+      alias_method :configuration, :setup
       
       # Share track from other operation
       def share(track_name, from:, track_options: {}, &block)
@@ -76,6 +77,16 @@ module Clomp
         @track_builders << build_track(track_name, track_options, :track, track_for: nil, &block)
       end
       
+      alias_method :set, :track
+      
+      def method_missing(symbol, *args)
+        if self.configuration.custom_step_names.include?(symbol)
+          track(args)
+        else
+          super
+        end
+      end
+      
       # get the track name for the failure case!
       def failure(track_name, track_options: {}, &block)
         @track_builders ||= []
@@ -90,19 +101,17 @@ module Clomp
         @track_builders << build_track(track_name, track_options, :finally, track_for: nil, &block)
       end
       
-      def [](mutable_data = {}, immutable_data = {})
-        self.(mutable_data, immutable_data)
-      end
-      
       def call(mutable_data = {}, immutable_data = {})
         new(
             track_builders: @track_builders,
             options:        {
-                mutable_data:   mutable_data,
-                immutable_data: immutable_data
+                params:   mutable_data || {},
+                immutable_data: immutable_data || {}
             },
             ).result
       end
+      
+      alias_method :[], :call
       
       private
       

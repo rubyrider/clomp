@@ -86,6 +86,16 @@ end
 @result.failure? # => false
 ```
 
+## Configuration
+You can set custom step name(s), custom fail, pass flow configuration globally and operation wise!
+
+```ruby
+Clomp::Configuration.setup do |config|
+# You can set as many step name as you want
+config.custom_step_names =+ [:my_own_step_name]
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

@@ -1,7 +1,7 @@
 RSpec.describe Clomp::Operation do
   describe 'Successful operation' do
     class AnotherOperation < Clomp::Operation
-      track :track_from_another_operation
+      step :track_from_another_operation
     
       def track_from_another_operation(options)
         options[:hello_from_another_operation] = true
@@ -26,8 +26,8 @@ RSpec.describe Clomp::Operation do
       failure :notify_admin
       finally :tell_user_about_this
       
-      def first_track(options, mutable_data:, **)
-        mutable_data[:c] = 'Updated'
+      def first_track(options, params:, **)
+        params[:c] = 'Updated'
       end
       
       def call_something(options)
@@ -76,7 +76,7 @@ RSpec.describe Clomp::Operation do
     end
     
     it 'should mutate options' do
-      expect(@result.options[:mutable_data][:c]).to be == 'Updated'
+      expect(@result.options[:params][:c]).to be == 'Updated'
     end
     
     it 'should execute block on success' do
@@ -90,7 +90,7 @@ RSpec.describe Clomp::Operation do
   
   describe 'Failure operation' do
     class FailureOperation < Clomp::Operation
-      track :first_track
+      set :first_track
       
       track :call_something do |options|
         options[:d] = 'New'
@@ -99,8 +99,8 @@ RSpec.describe Clomp::Operation do
       failure :notify_admin
       finally :tell_user_about_this
       
-      def first_track(options, mutable_data:, **)
-        mutable_data[:c] = 'Updated'
+      def first_track(options, params:, **)
+        params[:c] = 'Updated'
       end
       
       def call_something(options)
@@ -150,8 +150,8 @@ RSpec.describe Clomp::Operation do
     end
     
     it 'should mutate options' do
-      expect(@result.data[:c]).to be == 'Updated'
-      expect(@result.options[:mutable_data][:c]).to be == 'Updated'
+      expect(@result.options[:params][:c]).to be == 'Updated'
+      expect(@result.options[:params][:c]).to be == 'Updated'
     end
 
     it 'should execute block on failure' do
