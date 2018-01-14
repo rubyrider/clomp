@@ -40,7 +40,6 @@ class SingingOperation < Clomp::Operation
     # Configure your operation for common tracks,
     # configuration can be overridden from individual tracks 
     setup do |config|
-      config.pass_fast = true
       config.fail_fast = true
       config.optional = true
      end
@@ -62,16 +61,16 @@ class SingingOperation < Clomp::Operation
     
     finally :receive_price #final step, wont execute after this step!
     
-    def get_instruments_ready(options, mutable_data: , **)
+    def get_instruments_ready(options, params: , **)
       # do anything!
     end
     
-    def get_lyrics(options, mutable_data: , **)
-      mutable_data[:singer_name] = 'James' #mutate
+    def get_lyrics(options, params: , **)
+      params[:singer_name] = 'James' #mutate
     end
     
     def start_signing(options)
-      puts options[:mutable_options]
+      puts options[:params]
     end
     
     def receive_price(options)
