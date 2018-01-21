@@ -85,6 +85,16 @@ end
 @result.failure? # => false
 ```
 
+Trace the steps:
+```ruby
+@result = SingingOperation[singer_name: 'Base Baba']
+@result.executed_tracks
+"first_track:track:success --> track_from_another_operation:track:success --> call_something:track:success"
+
+@result.to_s
+"Clomp::Result > Successful: first_track:track:success --> track_from_another_operation:track:success --> call_something:track:success"
+```
+
 ## Configuration
 You can set custom step name(s), custom fail, pass flow configuration globally and operation wise!
 

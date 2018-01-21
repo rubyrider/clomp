@@ -2,7 +2,7 @@ module Clomp
   class Track
     include Clomp::CommonStates
     
-    attr_reader :name, :block, :track_options, :state, :error, :track_from
+    attr_reader :name, :block, :track_options, :state, :error, :track_from, :type
     
     VALID_TRACK_TYPES = %I(track failed_track finally catch)
     
@@ -28,10 +28,6 @@ module Clomp
       end
     end
     
-    def track?
-      @type == :track
-    end
-    
     # Track#exec! executes the steps defined in the operation class
     def exec!(object, options)
       mark_as_failure! # going to execute! set to failure initially
@@ -48,6 +44,8 @@ module Clomp
     
     rescue => e
       @error = e.message
+
+      mark_as_failure!
       
       self
     end

@@ -1,6 +1,6 @@
 module Clomp
   class Operation
-    attr_reader :result, :configs
+    attr_reader :result, :configs, :output, :executed
     
     # Constructor for operation object
     #
@@ -8,17 +8,25 @@ module Clomp
     # @param options [Hash] of options to be provided by .[] call/method
     # @return [self]
     def initialize(track_builders: [], options: {}, exec: true)
-      @options = options
+      @options          = {}
+      @options[:params] = options[:params]
+      @options.merge!(options[:immutable_data]) if options[:immutable_data]
       # Setup result object!
       @result = Result.new(
           operation: self,
           tracks:    track_builders || [],
-          options:   options || {}
+          options:   @options || {}
       )
       
-      @configs = self.class.setup_configuration
+      @executed = []
+      @configs  = self.class.setup_configuration
+      @output   = get_status
       
       exec_steps! if exec
+    end
+    
+    def executed_tracks
+      @executed.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state].join(":") }.join(" --> ")
     end
     
     # Execute all the steps! Execute all the tracks!
@@ -28,6 +36,19 @@ module Clomp
     
     def executed_steps
       @result['tracks'].collect {|track| track.name if track.success?}.compact
+    end
+    
+    # collect track status
+    def get_status
+      @result['tracks'].collect {|track| track.name if track.failure?}.compact.count.zero? ? 'Success' : 'Failure'
+    end
+    
+    def failed
+      get_status == 'Failure'
+    end
+    
+    def successful
+      get_status == 'Success'
     end
     
     # Name of the steps defined in the operation class
@@ -62,12 +83,12 @@ module Clomp
       # Share track from other operation
       def share(track_name, from:, track_options: {}, &block)
         @track_builders ||= []
-  
+        
         _callable_class = from && from.kind_of?(String) ? Object.const_get(from) : from
         
         raise UnknownOperation, 'Please provide a valid operation to share the steps for' unless _callable_class
         
-        @track_builders << build_track(track_name, track_options, :track, track_for: _callable_class , &block)
+        @track_builders << build_track(track_name, track_options, :track, track_for: _callable_class, &block)
       end
       
       # get track name and options!
@@ -90,7 +111,7 @@ module Clomp
       # get the track name for the failure case!
       def failure(track_name, track_options: {}, &block)
         @track_builders ||= []
-        
+
         @track_builders << build_track(track_name, track_options, :failed_track, track_for: nil, &block)
       end
       
@@ -105,7 +126,7 @@ module Clomp
         new(
             track_builders: @track_builders,
             options:        {
-                params:   mutable_data || {},
+                params:         mutable_data || {},
                 immutable_data: immutable_data || {}
             },
             ).result

@@ -27,6 +27,14 @@ module Clomp
       @state.(self[:tracks]) === false
     end
     
+    def state_statement
+      success? ? 'Successful' : 'Failure'
+    end
+
+    def to_s
+      "#{self.class.name} > #{state_statement}: #{executed_tracks}"
+    end
+    
     def method_missing(method, *args)
       if @operation.respond_to?(method)
         @operation.send(method, *args)
