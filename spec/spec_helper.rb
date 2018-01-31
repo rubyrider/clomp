@@ -1,6 +1,10 @@
 require "bundler/setup"
 require 'clomp'
 require 'byebug'
+require 'codeclimate-test-reporter'
+require 'simplecov'
+
+SimpleCov.start
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

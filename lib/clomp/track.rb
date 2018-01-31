@@ -2,30 +2,38 @@ module Clomp
   class Track
     include Clomp::CommonStates
     
-    attr_reader :name, :block, :track_options, :state, :error, :track_from, :type
+    attr_reader :name, :block, :track_options, :state, :error, :track_from, :left, :right
+    attr_accessor :executed
     
     VALID_TRACK_TYPES = %I(track failed_track finally catch)
     
-    def initialize(name: (raise Errors::NoTrackProvided), track_options: {}, track_type: VALID_TRACK_TYPES.first, track_from: nil, &block)
-      raise UnknownTrackType, 'Please provide a valid track type' unless VALID_TRACK_TYPES.include?(track_type)
-      
+    def initialize(name: (raise Errors::NoTrackProvided), track_options: {}, right: true, track_from: nil, &block)
       @name          = name
       @track_from    = track_from
       @block         = block
       @track_options = track_options
-      @type          = track_type
       @state         = 'pending'
       @error         = nil
+      @right         = true
+      @executed      = false
+    end
+    
+    def executed?
+      @executed == true
     end
     
     def type
-      @type
+      @right ? :right_track : :left_track
     end
     
-    VALID_TRACK_TYPES.each do |track_type|
-      define_method "#{track_type}?" do
-        @type == track_type
-      end
+    alias_method :track?, :type
+    
+    def left_track?
+      !right_track?
+    end
+    
+    def right_track?
+      @right
     end
     
     # Track#exec! executes the steps defined in the operation class
@@ -38,13 +46,15 @@ module Clomp
         mark_as_success! if object.public_send(name.to_sym, options) != false
       end
       
-      @block.(options) if failure? && @block
+      @block.(options) if success? && @block
       
       self
     
     rescue => e
       @error = e.message
-
+      
+      pp @error
+      
       mark_as_failure!
       
       self

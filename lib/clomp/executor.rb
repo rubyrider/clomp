@@ -7,7 +7,8 @@ module Clomp
       #
       def [](result = {}, options, _self:)
         result['tracks'].each do |track|
-          next unless track.track?
+          next if _self.successful? && track.left_track?
+          next if _self.failed? && track.right_track?
           
           _callable_object = Callable[track, options, _self]
           
@@ -17,11 +18,13 @@ module Clomp
           
           _self.executed << _track
           
+          _track.executed = true
+          
           # Considering pass first on success state
-          break if _track.success? && ((options[:pass_fast]) || Configuration.setup.pass_fast)
+          break if _track.success? && (_track.track_options[:pass_fast])
           
           # Consider both local or global configuration
-          break if _track.failure? && ((options[:fail_fast]) || Configuration.setup.fail_fast)
+          break if _track.failure? && (_track.track_options[:fail_fast])
         end
         
         _self

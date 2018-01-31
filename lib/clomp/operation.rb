@@ -26,7 +26,7 @@ module Clomp
     end
     
     def executed_tracks
-      @executed.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state].join(":") }.join(" --> ")
+      executed_track_list.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state].join(":") }.join(" --> ")
     end
     
     # Execute all the steps! Execute all the tracks!
@@ -34,8 +34,12 @@ module Clomp
       Executor[result, @options, _self: self]
     end
     
+    def executed_track_list
+      @result['tracks'].collect {|track| track if track.executed? }.compact
+    end
+    
     def executed_steps
-      @result['tracks'].collect {|track| track.name if track.success?}.compact
+      executed_track_list.collect {|track| track.name }.compact
     end
     
     # collect track status
@@ -46,10 +50,14 @@ module Clomp
     def failed
       get_status == 'Failure'
     end
-    
+
+    alias_method :failed?, :failed
+
     def successful
       get_status == 'Success'
     end
+    
+    alias_method :successful?, :successful
     
     # Name of the steps defined in the operation class
     def steps
@@ -95,7 +103,7 @@ module Clomp
       def track(track_name, track_options: {}, &block)
         @track_builders ||= []
         
-        @track_builders << build_track(track_name, track_options, :track, track_for: nil, &block)
+        @track_builders << build_track(track_name, track_options, true, track_for: nil, &block)
       end
       
       alias_method :set, :track
@@ -112,14 +120,14 @@ module Clomp
       def failure(track_name, track_options: {}, &block)
         @track_builders ||= []
 
-        @track_builders << build_track(track_name, track_options, :failed_track, track_for: nil, &block)
+        @track_builders << build_track(track_name, track_options, false, track_for: nil, &block)
       end
       
       # get the track name for the final step! Only one step will be executed!
       def finally(track_name, track_options: {}, &block)
         @track_builders ||= []
         
-        @track_builders << build_track(track_name, track_options, :finally, track_for: nil, &block)
+        @track_builders << build_track(track_name, track_options, true, track_for: nil, &block)
       end
       
       def call(mutable_data = {}, immutable_data = {})
@@ -139,7 +147,7 @@ module Clomp
       def build_track(track_name, track_options = {}, track_type, track_for: nil, &block)
         @configs ||= Configuration.new
         
-        TrackBuilder[track_name: track_name, track_options: track_options, track_type: track_type, track_for: track_for, &block]
+        TrackBuilder[track_name: track_name, track_options: track_options, track_type: true, track_for: track_for, &block]
       end
     end
   end
