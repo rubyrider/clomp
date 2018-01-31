@@ -80,14 +80,14 @@ end
 ```
 
 ```ruby
-@result = SingingOperation[singer_name: 'Base Baba']
+@result = SingingOperation[singer_name: 'Bass Baba']
 @result.success? # => true
 @result.failure? # => false
 ```
 
 Trace the steps:
 ```ruby
-@result = SingingOperation[singer_name: 'Base Baba']
+@result = SingingOperation[singer_name: 'Bass Baba']
 @result.executed_tracks
 "first_track:track:success --> track_from_another_operation:track:success --> call_something:track:success"
 
