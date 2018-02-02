@@ -14,7 +14,8 @@ module Clomp
       @track_options = track_options
       @state         = 'pending'
       @error         = nil
-      @right         = true
+      @right         = right
+      @left          = !@right
       @executed      = false
     end
     
@@ -52,8 +53,6 @@ module Clomp
     
     rescue => e
       @error = e.message
-      
-      pp @error
       
       mark_as_failure!
       

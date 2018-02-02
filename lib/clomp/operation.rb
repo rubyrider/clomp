@@ -144,10 +144,10 @@ module Clomp
       
       private
       
-      def build_track(track_name, track_options = {}, track_type, track_for: nil, &block)
+      def build_track(track_name, track_options = {}, track_type = true, track_for: nil, &block)
         @configs ||= Configuration.new
         
-        TrackBuilder[track_name: track_name, track_options: track_options, track_type: true, track_for: track_for, &block]
+        TrackBuilder[track_name: track_name, track_options: track_options, track_type: track_type, track_for: track_for, &block]
       end
     end
   end

@@ -16,8 +16,6 @@ module Clomp
           
           _track = track.exec!(_callable_object, options)
           
-          _self.executed << _track
-          
           _track.executed = true
           
           # Considering pass first on success state

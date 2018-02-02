@@ -6,7 +6,7 @@ module Clomp
       @report         = {}
       @operation      = set_prop :operation, operation || Operation.new
       @tracks         = set_prop :tracks, tracks || []
-      @options        ||= {}
+      @options        = {}
       @immutable_data = set_prop :options, options
       @state          = ->(tracks) {tracks.select {|track| track.failure?}.count.zero?}
     end
