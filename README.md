@@ -9,7 +9,7 @@ or plain ruby object.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'Clomp'
+gem 'clomp'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install Clomp
+    $ gem install clomp
 
 ## Usage
 Build any service with the track! Add as many tracks as you want.
