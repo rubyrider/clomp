@@ -212,7 +212,7 @@ RSpec.describe Clomp::Operation do
       
       it 'should not call steps after the failed track' do
         #FIXME need to debug more deeply
-        # expect(@result.executed_steps).not_to include :failed_after_fail_fast
+        expect(@result.executed_steps).not_to include :failed_after_fail_fast
         expect(@result.executed_steps).not_to include :tell_user_about_this
       end
       

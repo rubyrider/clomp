@@ -48,11 +48,15 @@ module Clomp
       end
       
       @block.(options) if success? && @block
-      
+
+      self.executed = true
+
       self
     
     rescue => e
       @error = e.message
+
+      self.executed = false
       
       mark_as_failure!
       
