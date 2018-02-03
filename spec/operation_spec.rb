@@ -151,7 +151,7 @@ RSpec.describe Clomp::Operation do
       # end
     end
     
-    context "With fail fast" do
+    context "With fail fast at right track" do
       class User; end
       
       class FailFastOperation < Clomp::Operation
@@ -225,5 +225,88 @@ RSpec.describe Clomp::Operation do
         expect(@result.options[:current_user]).to be_nil
       end
     end
+    context "With fail fast at left track" do
+      class User; end
+  
+      class FailFastOperation < Clomp::Operation
+        set :first_track
+    
+        track :call_with_fail_fast do |options|
+          options[:current_user] = User.new
+        end
+    
+        failure :fail_fast, track_options: { fail_fast: true }
+        failure :another_after_fail_fast
+        finally :tell_user_about_this
+    
+        def first_track(options, params:, **)
+          params[:c] = 'Updated'
+        end
+    
+        def call_with_fail_fast(options)
+          false
+        end
+    
+        def fail_fast(options)
+          false
+        end
+    
+        def tell_user_about_this(options)
+        end
+        
+        def another_after_fail_fast(options, params:, **)
+          params[:failed] = true
+        end
+      end
+  
+  
+      before do
+        @result = FailFastOperation[{ a: 1 }, { b: 2 }]
+      end
+  
+      it 'should have configuration' do
+        expect(@result.configs).to be_an_instance_of(Clomp::Configuration)
+      end
+  
+      it 'should be configured not to fail fast by default' do
+        expect(@result.configs.fail_fast).to be_falsey
+      end
+  
+      it 'should be configured not to pass fast by default' do
+        expect(@result.configs.pass_fast).to be_falsey
+      end
+  
+      it 'should be configured not to execute track optionally' do
+        expect(@result.configs.optional).to be_falsey
+      end
+  
+      it 'Operation#failure? should return true if any step is failure' do
+        expect(@result.success?).to be_falsey
+        expect(@result.failure?).to be_truthy
+      end
+  
+      it 'should add tracks' do
+        expect(@result.steps).to include :first_track
+        expect(@result.steps).to include :fail_fast
+      end
+  
+      it 'should not call steps after the failed track' do
+        expect(@result.executed_steps).not_to include :another_after_fail_fast
+      end
+  
+      it 'should not call steps after the failed track' do
+        expect(@result.options[:params][:failed]).to be_falsey
+      end
+  
+      it 'should mutate options' do
+        expect(@result.options[:params][:c]).to be_nil
+      end
+  
+      it 'should execute block on failure' do
+        # Because of fail fast at the first track!
+        expect(@result.options[:current_user]).to be_nil
+      end
+    end
+
   end
 end
