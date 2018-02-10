@@ -7,5 +7,3 @@ module Clomp
     end
   end
 end
-
-# 9dd796f8b50c23addaf020473df0c0430c3f37f4a8383459106eb1d72401433e

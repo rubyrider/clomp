@@ -1,6 +1,6 @@
 module Clomp
   class Operation
-    attr_reader :result, :configs, :output, :executed
+    attr_reader :result, :configs, :output, :executed, :options
     
     # Constructor for operation object
     #
@@ -8,14 +8,14 @@ module Clomp
     # @param options [Hash] of options to be provided by .[] call/method
     # @return [self]
     def initialize(track_builders: [], options: {}, exec: true)
-      @options          = {}
+      @options          = Clomp::Option[{params: {}}]
       @options[:params] = options[:params]
       @options.merge!(options[:immutable_data]) if options[:immutable_data]
       # Setup result object!
       @result = Result.new(
           operation: self,
           tracks:    track_builders || [],
-          options:   @options || {}
+          options:   @options || Option.new
       )
       
       @executed = []
@@ -23,10 +23,16 @@ module Clomp
       @output   = get_status
       
       exec_steps! if exec
+
+      prepare_options
+    end
+    
+    def prepare_options
+      executed_track_list.map {|track|  @options.merge!(track.options)}
     end
     
     def executed_tracks
-      executed_track_list.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state].join(":") }.join(" --> ")
+      executed_track_list.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state, executed_track.options.keys.join(' || '), @options.rehash.keys.join(' :: ')].join(":") }.join(" --> ")
     end
     
     # Execute all the steps! Execute all the tracks!
@@ -131,13 +137,13 @@ module Clomp
       end
       
       def call(mutable_data = {}, immutable_data = {})
-        new(
+        result = new(
             track_builders: @track_builders,
             options:        {
                 params:         mutable_data || {},
                 immutable_data: immutable_data || {}
             },
-            ).result
+        ).result
       end
       
       alias_method :[], :call
