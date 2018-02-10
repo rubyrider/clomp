@@ -8,7 +8,7 @@ module Clomp
       @tracks         = set_prop :tracks, tracks || []
       @options        = Option.new
       @immutable_data = set_prop :options, options
-      @state          = ->(tracks) {tracks.select {|track| track.failure?}.count.zero?}
+      @state          = ->(tracks) { tracks.select {|track| track.failure?}.count.zero? }
     end
     
     def options=(options = Option.new)

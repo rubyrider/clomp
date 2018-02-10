@@ -32,7 +32,7 @@ module Clomp
     end
     
     def executed_tracks
-      executed_track_list.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state, executed_track.options.keys.join(' || '), @options.rehash.keys.join(' :: ')].join(":") }.join(" --> ")
+      executed_track_list.collect {|executed_track| [executed_track.name, executed_track.type, executed_track.state, executed_track.options.keys.join(' || ')] }.join(" --> ")
     end
     
     # Execute all the steps! Execute all the tracks!
