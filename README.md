@@ -25,6 +25,13 @@ Build any service with the track! Add as many tracks as you want.
 tracks will be loaded sequentially. You can control success and failure state of any 
 specific step.
 
+### Example application
+You may check the following rails project for basic understanding.
+[Clomp Usage Example](https://github.com/rubyrider/clomp-example)
+
+Clomp is completely framework independent agnostic framework. You can use it with any ruby frameworks
+and even with your raw ruby code.
+
 
 Consider the following class:
 ```ruby
